@@ -202,20 +202,6 @@ THe following datasets where analysed, but the paraphrase generation model prith
 - [SNIPS commands](https://github.com/sz128/slot_filling_and_intent_detection_of_SLU)
 - [MSRP Frames](https://www.microsoft.com/en-us/research/project/frames-dataset/)
 
-## Power of Augmentation - Metrics and Comparison
-
-### Intent Classification task: 
-
-Experimental setup: From each dataset increasing number of random utternaces per intent were taken to form the raw training data. The same data was then 
-augmented with parrot paraphraser for Nx times(where N =10 or 15 depending the dataset) to form the augmented training data. Now models are trained on both raw data and augmented data to compare the performance. Being a multiclass classification model weighted F1 was used as a metric. The experiment was repeated 4 times for each number of utterance and F1 has been averaged to remove randomness in the trend. I have used 6 prominent NLU datasets from across domains. Below charts reveal that with a **"very modest number"** utterances and paraphrase augmentation we can achieve good classfication performance on day 1. "Very modest" varies between 4 to 6 utterances per intent in some datasets and 5 to 7 for some datasets.
-
-<p align="left"><img src="images/ATIS_chart.png" width="70%" height="65%"/></p>
-<p align="left"><img src="images/SNIPS_chart.png" width="70%" height="65%"/></p>
-<p align="left"><img src="images/CLINC_chart.png" width="70%" height="65%"/></p>
-<p align="left"><img src="images/WA_chart.png" width="70%" height="65%"/></p>
-<p align="left"><img src="images/CB_chart.png" width="70%" height="65%"/></p>
-<p align="left"><img src="images/AU_chart.png" width="70%" height="65%"/></p>
-
 ## Current Limitations/Known issues
 <ul>
  <li> The diversity scores are not normalised each of the diversity rankers scores paraphrases differently </li>
