@@ -1,10 +1,5 @@
-[![PyPI - License](https://img.shields.io/hexpm/l/plug)](https://github.com/PrithivirajDamodaran/Parrot/blob/main/LICENSE)
-[![visitors](https://visitor-badge.glitch.me/badge?page_id=Parrot_Paraphraser.count_visitors)](https://visitor-badge.glitch.me)
-
 # Parrot
 Parrot is a paraphrase based utterance augmentation framework purpose built to accelerate training NLU models. A paraphrase framework is more than just a paraphrasing model.
-
-<img src="images/Logo.png" width="35%" height="35%" align="right" />
 
 ## Table of contents
 - [Why Parrot?](#why-parrot-)
@@ -23,8 +18,6 @@ Parrot is a paraphrase based utterance augmentation framework purpose built to a
 - [References](#references)
 - [Citation](#citation)
 
-
-
 ## Why Parrot?
 **Huggingface** lists [16 paraphrase generation models,](https://huggingface.co/models?pipeline_tag=text2text-generation&search=paraphrase) (as of this writing)  **RapidAPI** lists 7 fremium and commercial paraphrasers like [QuillBot](https://rapidapi.com/search/paraphrase?section=apis&page=1), Rasa has discussed an experimental paraphraser for augmenting text data [here](https://forum.rasa.com/t/paraphrasing-for-nlu-data-augmentation-experimental/27744), Sentence-transfomers offers a [paraphrase mining utility](https://www.sbert.net/examples/applications/paraphrase-mining/README.html) and [NLPAug](https://github.com/makcedward/nlpaug) offers word level augmentation with a [PPDB](http://paraphrase.org/#/download) (a multi-million paraphrase database). While these attempts at paraphrasing are great, there are still some gaps and paraphrasing is NOT yet a mainstream option for text augmentation in building NLU models....Parrot is a humble attempt to fill some of these gaps.
 
@@ -41,15 +34,6 @@ Parrot is a paraphrase based utterance augmentation framework purpose built to a
  - The annotated data created out of the output paraphrases then makes the training dataset for your NLU model.
 
 But in general being a generative model paraphrasers doesn't guarantee to preserve the slots/entities. So the ability to generate high quality paraphrases in a constrained fashion without trading off the intents and slots for lexical dissimilarity makes a paraphraser a good augmentor. *More on this in section 3 below*
-
-## Getting started
-### Install
-```python
-pip install git+https://github.com/PrithivirajDamodaran/Parrot_Paraphraser.git
-```
-
-### Demo notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oHwF5sXxLGH8i6M0YGwGP0RstwZQDuGW?usp=sharing) Demo notebook
 
 ### Quickstart
 ```python
@@ -232,23 +216,11 @@ augmented with parrot paraphraser for Nx times(where N =10 or 15 depending the d
 <p align="left"><img src="images/CB_chart.png" width="70%" height="65%"/></p>
 <p align="left"><img src="images/AU_chart.png" width="70%" height="65%"/></p>
 
-### Semantic slot-filling task: 
-TBD
-
-## Current Features
-TBD
-
-## Roadmap
-TBD
-
 ## Current Limitations/Known issues
 <ul>
  <li> The diversity scores are not normalised each of the diversity rankers scores paraphrases differently </li>
  <li> Some command style input phrases generate less adequate paraphrases</li>
 </ul>
-
-## References
-TBD
 
 ## Citation
 
