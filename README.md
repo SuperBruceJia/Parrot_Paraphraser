@@ -94,7 +94,7 @@ list some famous places which we should not miss in russia?
 ### Getting syntactic and phrasal diversity/variety in your paraphrases ?
 
 You can play with the do_diverse knob (checkout the next section for more knobs). 
-Consider this example: **do_diverse = False (default)***
+Consider this example: **diversity_penalty = False (default)***
 ```
 ------------------------------------------------------------------------------
 Input_phrase: How are the new Macbook Pros with M1 chips?
@@ -105,7 +105,7 @@ Input_phrase: How are the new Macbook Pros with M1 chips?
 'how do you like the new macbook pro m1 chip? '
 'what is the use of the new macbook pro m1 chips? '
 ```
-**do_diverse = True**
+**diversity_penalty = True**
 ```
 ------------------------------------------------------------------------------
 Input_phrase: How are the new Macbook Pros with M1 chips?
@@ -120,26 +120,11 @@ Input_phrase: How are the new Macbook Pros with M1 chips?
 'how are the new macbook pros with m1 chips? '
 ```
 
-### Other Knobs
-```python
-
- para_phrases = parrot.augment(input_phrase=phrase,
-                               use_gpu=False,
-                               diversity_ranker="levenshtein",
-                               do_diverse=False, 
-                               max_return_phrases = 10, 
-                               max_length=32, 
-                               adequacy_threshold = 0.99, 
-                               fluency_threshold = 0.90)
-
-```
-
 ## Scope
 
 In the space of conversational engines, knowledge bots are to which **we ask questions** like *"when was the Berlin wall teared down?"*, transactional bots are to which **we give commands** like *"Turn on the music please"* and voice assistants are the ones which can do both answer questions and action our commands. Parrot mainly foucses on augmenting texts typed-into or spoken-to conversational interfaces for building robust NLU models. (*So usually people neither type out or yell out long paragraphs to conversational interfaces. Hence the pre-trained model is trained  on text samples of maximum length of 32.*)
 
 *While Parrot predominantly aims to be a text augmentor for building good NLU models, it can also be used as a pure-play paraphraser.*
-
 
 ## What makes a paraphraser a good augmentor for NLU? (Details)
 
