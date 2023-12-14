@@ -185,7 +185,7 @@ class Parrot:
             self,
             input_phrase,
             ranker="levenshtein",
-            do_diverse=False,
+            diversity_penalty=False,
             max_return_phrases=10,
             max_length=128,
             adequacy_threshold=0.90,
@@ -205,7 +205,7 @@ class Parrot:
         input_ids = self.tokenizer.encode(input_phrase, return_tensors='pt')
         input_ids = input_ids.to(device)
 
-        if do_diverse:
+        if diversity_penalty:
             for n in range(2, 9):
                 if max_return_phrases % n == 0:
                     break
