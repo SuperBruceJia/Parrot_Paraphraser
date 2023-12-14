@@ -1,4 +1,20 @@
 # coding=utf-8
+#
+# Copyright 2021: https://github.com/PrithivirajDamodaran/Parrot_Paraphraser
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Modified by Shuyue Jia
 
 import re
 import difflib
@@ -115,10 +131,8 @@ class Diversity:
     def rank(self, input_phrase, paraphrases, ranker='levenshtein'):
         if ranker == "levenshtein":
             return self.levenshtein_ranker(input_phrase, paraphrases)
-
         elif ranker == "euclidean":
             return self.euclidean_ranker(input_phrase, paraphrases)
-
         elif ranker == "diff":
             return self.diff_ranker(input_phrase, paraphrases)
 
@@ -127,10 +141,10 @@ class Diversity:
         outputs = []
         input_enc = self.model.encode(input_phrase.lower())
 
-        for para_phrase in paraphrases:
-            paraphrase_enc = self.model.encode(para_phrase.lower())
-            euclidean_distance = (spatial.distance.euclidean(input_enc, paraphrase_enc))
-            outputs.append((para_phrase, euclidean_distance))
+        for phrase in paraphrases:
+            enc = self.model.encode(phrase.lower())
+            l2_dis = (spatial.distance.euclidean(input_enc, enc))
+            outputs.append((phrase, l2_dis))
 
         df = pd.DataFrame(outputs, columns=['paraphrase', 'scores'])
         fields = []
@@ -139,6 +153,7 @@ class Diversity:
                 tup = ([col], MinMaxScaler())
             else:
                 tup = ([col], None)
+
             fields.append(tup)
 
         mapper = DataFrameMapper(fields, df_out=True)
@@ -149,9 +164,9 @@ class Diversity:
 
     def levenshtein_ranker(self, input_phrase, paraphrases):
         scores = {}
-        for para_phrase in paraphrases:
-            distance = Levenshtein.distance(input_phrase.lower(), para_phrase)
-            scores[para_phrase] = distance
+        for phrase in paraphrases:
+            distance = Levenshtein.distance(input_phrase.lower(), phrase)
+            scores[phrase] = distance
 
         return scores
 
@@ -159,14 +174,14 @@ class Diversity:
         differ = difflib.Differ()
 
         scores = {}
-        for para_phrase in paraphrases:
-            diff = differ.compare(input_phrase.split(), para_phrase.split())
+        for phrase in paraphrases:
+            diff = differ.compare(input_phrase.split(), phrase.split())
             count = 0
             for d in diff:
                 if "+" in d or "-" in d:
                     count += 1
 
-            scores[para_phrase] = count
+            scores[phrase] = count
 
         return scores
 
@@ -191,7 +206,6 @@ class Parrot:
             adequacy_threshold=0.90,
             fluency_threshold=0.90
     ):
-
         device = "cpu"
         self.model = self.model.to(device)
 
@@ -246,13 +260,13 @@ class Parrot:
             if len(fluency_filter) > 0:
                 scored_phrases = self.diversity_score.rank(input_phrase, fluency_filter, ranker)
 
-                para_phrases = []
-                for para_phrase, diversity_score in scored_phrases.items():
-                    para_phrases.append((para_phrase, diversity_score))
+                phrases = []
+                for phrase, diversity_score in scored_phrases.items():
+                    phrases.append((phrase, diversity_score))
 
-                para_phrases.sort(key=lambda x: x[1], reverse=True)
+                phrases.sort(key=lambda x: x[1], reverse=True)
 
-                return para_phrases
+                return phrases
 
             else:
                 return [(save_phrase, 0)]
